@@ -99,7 +99,7 @@ class TryoutController extends Controller
                     $question
                         ->tkpScores()
 
-                        ->where("option", $answer->answer)
+                        ->where("answer_option", $answer->answer)
                         ->value("score") ?? 0;
 
                 $answer->score = $tkpScore;

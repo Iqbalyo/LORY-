@@ -34,15 +34,14 @@ class AdminDashboardController extends Controller
     public function updateRole(Request $request, User $user)
     {
         $request->validate([
-            "role" => "require|in:user,admin",
+            "role" => "required|in:user,admin",
         ]);
 
         $user->update([
             "role" => $request->role,
         ]);
 
-        return back() - with("Sukses");
-    }
+return back()->with("success", "Role berhasil diperbarui!");    }
 
     public function destroyUser(User $user)
     {

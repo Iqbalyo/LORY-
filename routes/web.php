@@ -23,7 +23,13 @@ Route::get("/", function () {
 });
 
 Route::get("/dashboard", function () {
-    return view("dashboard");
+    
+    if(auth()->user()->role === 'admin') {
+        return redirect(route('admin.dashboard'));
+
+        
+    }
+    return view('dashboard');
 })
 
 

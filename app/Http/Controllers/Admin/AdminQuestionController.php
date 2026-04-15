@@ -43,14 +43,32 @@ class AdminQuestionController extends Controller
             "option_c" => "required",
             "option_d" => "required",
             "option_e" => "required",
-            "correct_answer" => "required|in:A,B,C,D",
+            "correct_answer" => "required|in:A,B,C,D,E",
             "explanation" => "nullable",
+
+            "points_a" => "nullable|integer|min:1|max:5",
+        "points_b" => "nullable|integer|min:1|max:5",
+        "points_c" => "nullable|integer|min:1|max:5",
+        "points_d" => "nullable|integer|min:1|max:5",
+        "points_e" => "nullable|integer|min:1|max:5",
         ]);
 
-        Question::create($request->all());
-
-        return redirect()->route("questions.index");
+        $question = Question::create($request->all());
+        if ($question->category->slug === 'tkp') {
+        $options = ['A', 'B', 'C', 'D', 'E'];
+        
+        foreach ($options as $opt) {
+            $pointKey = "points_" . strtolower($opt); // jadi points_a, points_b, dst
+            
+            \App\Models\TkpScore::create([
+                'question_id' => $question->id,
+                'answer_option' => $opt,
+                'score' => $request->$pointKey ?? 0,
+            ]);
+        }
     }
+
+return redirect()->route("questions.index")->with('success', 'Soal berhasil disimpan!');    }
 
     public function edit(Question $question)
     {
