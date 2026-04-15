@@ -23,7 +23,7 @@ class TryoutController extends Controller
             $tryout = Tryout::create([
                 "user_id" => auth()->id(),
                 "started_at" => now(),
-                "duration_minutes" => 30,
+                "duration_minutes" => 10,
             ]);
         }
 
@@ -194,9 +194,7 @@ class TryoutController extends Controller
         if ($tryout->user_id !== auth()->id()) {
             abort(403);
         }
-        $answers = TryoutAnswer::where("tryout_id", $tryout->id)
-            ->with("question")
-            ->get();
+    $answers = $tryout->answers()->with('question.category')->get();
 
         return view("tryout.review", compact("tryout", "answers"));
     }
