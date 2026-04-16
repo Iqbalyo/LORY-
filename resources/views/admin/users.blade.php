@@ -3,7 +3,7 @@
         <div class="max-w-7xl mx-auto">
             <div class="mb-8 justify-between items-center">
                 <div>
-                    <h1 class="text-3xl font-extrabold tracking-tight text-[#1A2B3E]">Manager users</h1>
+                    <h1 class="text-3xl font-extrabold text-[#1A2B3E]">Manager users</h1>
                     <p class="text-gray-500 mt-1">Kelola Hak akses dan data pengguna LORY</p>
                 </div>
             </div>
