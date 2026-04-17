@@ -4,6 +4,14 @@
       "runtime": "vercel-php@0.7.1"
     }
   },
+  "headers": [
+    {
+      "source": "/build/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    }
+  ],
   "routes": [
     {
       "src": "/build/(.*)",
