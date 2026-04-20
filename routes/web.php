@@ -83,6 +83,7 @@ Route::middleware("auth")->group(function () {
 });
 
 Route::middleware(["auth", "admin"])
+
     ->prefix("admin")
     ->group(function () {
         Route::get("/dashboard", [
@@ -124,4 +125,13 @@ Route::middleware(["auth", "admin"])
         ]);
     });
 
-require __DIR__ . "/auth.php";
+
+Route::get('/cek-db', function () {
+    return [
+        'host' => config('database.connections.mysql.host'),
+        'db'   => config('database.connections.mysql.database'),
+        'user' => config('database.connections.mysql.username'),
+        'port' => config('database.connections.mysql.port'),
+    ];
+});
+    require __DIR__ . "/auth.php";
