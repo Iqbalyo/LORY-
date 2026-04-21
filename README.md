@@ -27,13 +27,3 @@ Pindahkan isi folder `public` atau gunakan `.htaccess` di root directory untuk r
 
 Jika ingin mencoba akses websitenya silahkan ke
 <h1>lory-app.infinityfreeapp.com</h1>
-
-Login sebagai Admin
-email : admin@admin
-password : 12345678
-
-Login sebagai user 
-email : user1@gmail.com
-pass : 12345678
-
-atau register akun pribadi anda untuk mencoba web tersebut
