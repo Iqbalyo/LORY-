@@ -23,7 +23,7 @@ class TryoutController extends Controller
             $tryout = Tryout::create([
                 "user_id" => auth()->id(),
                 "started_at" => now(),
-                "duration_minutes" => 10,
+                "duration_minutes" => 40,
             ]);
         }
 

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('tryouts', function (Blueprint $table) {
             //
-            $table->integer('duration_minutes')->default(10);
+            $table->integer('duration_minutes')->default(40);
         });
     }
 

@@ -14,13 +14,19 @@ class Question extends Model
     protected $fillable = [
         "category_id",
         "question_text",
+        "question_image", // Baru
         "option_a",
+        "option_a_image", // Baru
         "option_b",
+        "option_b_image", // Baru
         "option_c",
+        "option_c_image", // Baru
         "option_d",
+        "option_d_image", // Baru
         "option_e",
+        "option_e_image", // Baru
         "correct_answer",
-        "explanation",
+        "explanation"
     ];
 
     public function category()

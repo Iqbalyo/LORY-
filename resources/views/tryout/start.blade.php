@@ -1,21 +1,38 @@
 <x-guest-layout>
-    <!-- Session Status -->
+
     <style>
         body {
             overflow: hidden;
+            height: 100%;
+            position: fixed;
+            width: 100%;
+        }
+
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .question-item {
+            -webkit-overflow-scrolling: touch;
         }
     </style>
 
     <div class="min-h-screen p-6 pt-20 relative">
 
-        <!-- TOP INFO -->
+
         <div class="absolute top-6 left-6 right-6 flex justify-between z-10">
-            <!-- nomor soal - akan diupdate via JS -->
+
             <div class="bg-white/90 backdrop-blur px-4 py-2 rounded-full text-sm font-semibold text-[#1A2B3E] shadow">
                 Soal <span id="currentQuestionNumber">1</span>/<span id="totalQuestions">{{ $questions->count() }}</span>
             </div>
 
-            <!-- timer -->
+
             <div class="bg-white/90 backdrop-blur px-4 py-2 rounded-full text-sm font-semibold text-red-500 shadow"
                 id="timer">
                 00:00
@@ -62,7 +79,7 @@
                         $isAnswered = isset($answers[$question->id]);
                     @endphp
                     <div id="question-{{ $question->id }}"
-                        class="question-item bg-white rounded-2xl p-4 leading-tight transition-all"
+                        class="question-item bg-white rounded-2xl p-4 leading-tight transition-all max-h-[65vh] overflow-y-auto pb-28"
                         data-answered="{{ $isAnswered ? '1' : '0' }}" data-question-index="{{ $index }}"
                         style="display: {{ $index === 0 ? 'block' : 'none' }};">
 
@@ -73,7 +90,14 @@
                         </span>
 
                         <!-- Question Text -->
-                        <p class="text-gray-800 font-medium">{{ $question->question_text }}</p>
+                        <p class="text-gray-800 font-medium">
+                            {{ $question->question_text }}
+                        </p>
+
+                        @if ($question->question_image)
+                            <img src="{{ asset('storage/' . $question->question_image) }}"
+                                class="mt-3 rounded-xl max-h-60 object-contain">
+                        @endif
 
                         <!-- Options Form -->
                         <form method="POST" action="{{ route('tryout.answer') }}" class="mt-4"
@@ -88,7 +112,7 @@
                                         $isSelected =
                                             isset($answers[$question->id]) && $answers[$question->id]->answer === $opt;
                                     @endphp
-                                    @if ($optionText)
+                                    @if ($optionText || $question->$imageField)
                                         <label
                                             class="bg-white hover:bg-blue-50 border border-gray-200 rounded-xl p-3 cursor-pointer transition-all flex items-center shadow-sm group">
                                             <input type="radio" name="answer" value="{{ $opt }}"
@@ -98,7 +122,18 @@
                                                 class="font-bold mr-3 text-blue-600 group-hover:scale-110 transition-transform">
                                                 {{ $opt }}.
                                             </span>
-                                            <span class="text-gray-700">{{ $optionText }}</span>
+                                            <div class="flex flex-col">
+                                                <span class="text-gray-700">{{ $optionText }}</span>
+
+                                                @php
+                                                    $imageField = 'option_' . strtolower($opt) . '_image';
+                                                @endphp
+
+                                                @if ($question->$imageField)
+                                                    <img src="{{ asset('storage/' . $question->$imageField) }}"
+                                                        class="mt-2 rounded-lg max-h-40 object-contain">
+                                                @endif
+                                            </div>
                                         </label>
                                     @endif
                                 @endforeach

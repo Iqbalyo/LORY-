@@ -9,7 +9,7 @@
                     <p class="text-sm text-gray-500">Pastikan semua data soal dan poin terisi dengan benar.</p>
                 </div>
 
-                <form method="POST" action="{{ route('questions.store') }}" class="p-8">
+                <form method="POST" action="{{ route('questions.store') }}" enctype="multipart/form-data" class="p-8">
                     @csrf
 
                     <div class="mb-10">

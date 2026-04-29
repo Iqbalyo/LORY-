@@ -14,6 +14,7 @@ class Tryout extends Model
         'started_at',
         'finished_at',
         'score',
+        'is_passed',
         'score_twk',
         'score_tiu',
         'score_tkp',
