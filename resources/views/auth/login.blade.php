@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <!-- Session Status -->
+
 
     <style>
         body {
@@ -32,7 +32,7 @@
                 @enderror
 
 
-                <!-- Password -->
+                
                 <input type="password" name="password" autocomplete="current-password" placeholder="Masukkan Password"
                     class="w-full bg-white rounded-[15px] p-4 border border-[#E1E8F0] focus:outline-none focus:ring-2 focus:ring-[#1A2B3E]/10 placeholder:text-gray-400 transition"
                     required>
@@ -43,7 +43,7 @@
 
             </div>
 
-            <!-- Remember Me -->
+            {{--  --}}
             <div class="block mt-4">
                 <label for="remember_me" class="inline-flex items-center">
                     <input id="remember_me" type="checkbox"
@@ -52,15 +52,15 @@
                 </label>
             </div>
             
-           <!-- Register & Login (sejajar) -->
+           
 <div class="flex items-center justify-between mt-4">
 
-    <!-- kiri -->
+   
     <a href="{{ route('register') }}" class="text-md font-bold text-gray-600 hover:text-gray-900">
         Kembali ke sign up
     </a>
 
-    <!-- kanan -->
+   
     <x-primary-button>
         Log in
     </x-primary-button>

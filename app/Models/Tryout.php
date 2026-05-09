@@ -9,6 +9,7 @@ class Tryout extends Model
 {
     use HasFactory;
 
+    //sering2 di cek jika db error
     protected $fillable = [
         'user_id',
         'started_at',

@@ -7,7 +7,7 @@
         <canvas id="progressChart" height="200"></canvas>
     </div>
 
-    <!-- Chart.js -->
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
@@ -29,7 +29,7 @@
                 plugins: {
                     legend: {
                         display: false
-                        // mentor: HP → simpel
+                        
                     }
                 },
                 scales: {

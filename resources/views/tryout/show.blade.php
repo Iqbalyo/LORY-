@@ -1,7 +1,6 @@
 <h3>Analisa Skor</h3>
 
 <canvas id="scoreChart" height="200"></canvas>
-<!-- mentor: canvas ringan, cocok HP -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 const ctx = document.getElementById('scoreChart').getContext('2d');
@@ -28,8 +27,7 @@ new Chart(ctx, {
         responsive: true,
         plugins: {
             legend: {
-                display: false
-                // mentor: di HP legend bikin sesak
+                display: fals
             }
         },
         scales: {

@@ -45,7 +45,7 @@
                 Belum ada tryout.
             </p>
         @endforelse
-   {{-- Component navigation bottom --}}
+   {{-- ini buat component --}}
         <x-bottom-nav/>
     </div>
 </x-app-layout>

@@ -176,7 +176,7 @@
     </form>
 
     <script>
-        // Data dari PHP
+    
         let questions = @json($questions->pluck('id'));
         let currentIndex = 0;
         const totalQuestions = {{ $totalQuestions }};
@@ -205,7 +205,7 @@
             progressBar.style.width = percent + '%';
             answeredCountSpan.textContent = answered;
 
-            // Update navigation buttons color
+          
             document.querySelectorAll('.question-nav').forEach((btn, idx) => {
                 const questionItem = document.getElementById(`question-${questions[idx]}`);
                 if (questionItem && questionItem.dataset.answered === '1') {
@@ -250,7 +250,7 @@
                 currentIndex++;
                 showQuestion(currentIndex);
             } else {
-                // Last question - check completion
+                // Last question 
                 checkCompletion();
             }
         }
@@ -303,7 +303,7 @@
             const unanswered = document.querySelectorAll('.question-item[data-answered="0"]');
             if (unanswered.length > 0) {
                 alert(`Masih ada ${unanswered.length} soal belum dijawab`);
-                // Scroll to first unanswered
+                
                 const firstUnansweredId = unanswered[0].id;
                 const index = questions.findIndex(q => `question-${q}` === firstUnansweredId);
                 if (index !== -1) {
@@ -322,7 +322,7 @@
             finishBtn.disabled = false;
         }
 
-        // Timer Logic
+        // Timer
         if (timerEl) {
             timerEl.innerText = formatTime(remaining);
             const interval = setInterval(() => {
@@ -350,7 +350,7 @@
         updateProgress();
         showQuestion(0);
 
-        // Smooth scroll
+        
         document.querySelectorAll('.question-nav').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();

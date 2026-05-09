@@ -15,7 +15,7 @@
                         
                         <span class="text-xl font-medium">Mulai Tryout</span>
 
-                          <!-- icon arrow -->
+                          
                 <svg xmlns="http://www.w3.org/2000/svg"
                 class="w-5 h-5 text-[#1A2B3E]"
                 fill="none"
