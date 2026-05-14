@@ -29,7 +29,8 @@
         <div class="absolute top-6 left-6 right-6 flex justify-between z-10">
 
             <div class="bg-white/90 backdrop-blur px-4 py-2 rounded-full text-sm font-semibold text-[#1A2B3E] shadow">
-                Soal <span id="currentQuestionNumber">1</span>/<span id="totalQuestions">{{ $questions->count() }}</span>
+                Soal <span id="currentQuestionNumber">1</span>/<span id="totalQuestions">{{ $questions->count()
+                    }}</span>
             </div>
 
 
@@ -41,10 +42,10 @@
 
         <div class="bg-[#1A2B3E] flex-col p-2 min-h-screen rounded-2xl relative pb-24">
             @php
-                $answers = $tryout->answers->keyBy('question_id');
-                $answeredCount = $answers->count();
-                $totalQuestions = $questions->count();
-                $remainingSeconds = $remainingSeconds ?? 0;
+            $answers = $tryout->answers->keyBy('question_id');
+            $answeredCount = $answers->count();
+            $totalQuestions = $questions->count();
+            $remainingSeconds = $remainingSeconds ?? 0;
             @endphp
 
             <!-- Progress Bar -->
@@ -61,85 +62,86 @@
             <!-- Navigasi Soal (Compact) -->
             <div class="flex flex-wrap gap-1 mb-4 px-2 max-h-20 overflow-y-auto">
                 @foreach ($questions as $question)
-                    @php
-                        $isAnswered = isset($answers[$question->id]);
-                    @endphp
-                    <button onclick="scrollToQuestion({{ $question->id }}, {{ $loop->index }})"
-                        class="question-nav w-8 h-8 rounded-full text-xs font-bold transition-all
+                @php
+                $isAnswered = isset($answers[$question->id]);
+                @endphp
+                <button onclick="scrollToQuestion({{ $question->id }}, {{ $loop->index }})" class="question-nav w-8 h-8 rounded-full text-xs font-bold transition-all
                             {{ $isAnswered ? 'bg-green-500 text-white' : 'bg-red-500 text-white hover:bg-red-600' }}">
-                        {{ $loop->iteration }}
-                    </button>
+                    {{ $loop->iteration }}
+                </button>
                 @endforeach
             </div>
 
             <!-- Container Soal -->
             <div class="space-y-4" id="questionsContainer">
                 @foreach ($questions as $index => $question)
-                    @php
-                        $isAnswered = isset($answers[$question->id]);
-                    @endphp
-                    <div id="question-{{ $question->id }}"
-                        class="question-item bg-white rounded-2xl p-4 leading-tight transition-all max-h-[65vh] overflow-y-auto pb-28"
-                        data-answered="{{ $isAnswered ? '1' : '0' }}" data-question-index="{{ $index }}"
-                        style="display: {{ $index === 0 ? 'block' : 'none' }};">
+                @php
+                $isAnswered = isset($answers[$question->id]);
+                @endphp
+                <div id="question-{{ $question->id }}"
+                    class="question-item bg-white rounded-2xl p-4 leading-tight transition-all max-h-[65vh] overflow-y-auto pb-28"
+                    data-answered="{{ $isAnswered ? '1' : '0' }}" data-question-index="{{ $index }}"
+                    style="display: {{ $index === 0 ? 'block' : 'none' }};">
 
-                        <!-- Category Badge -->
-                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3"
-                            style="background-color: {{ $question->category->color }}20; color: {{ $question->category->color }}">
-                            {{ $question->category->name }}
-                        </span>
+                    <!-- Category Badge -->
+                    <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3"
+                        style="background-color: {{ $question->category->color }}20; color: {{ $question->category->color }}">
+                        {{ $question->category->name }}
+                    </span>
 
-                        <!-- Question Text -->
-                        <p class="text-gray-800 font-medium">
-                            {{ $question->question_text }}
-                        </p>
+                    <!-- Question Text -->
+                    <p class="text-gray-800 font-medium">
+                        {{ $question->question_text }}
+                    </p>
 
-                        @if ($question->question_image)
-                            <img src="{{ asset('storage/' . $question->question_image) }}"
-                                class="mt-3 rounded-xl max-h-60 object-contain">
-                        @endif
+                    @if ($question->question_image)
+                    <img src="{{ asset($question->question_image) }}" class="mt-3 rounded-xl max-h-60 object-contain">
+                    @endif
 
-                        <!-- Options Form -->
-                        <form method="POST" action="{{ route('tryout.answer') }}" class="mt-4"
-                            data-question-id="{{ $question->id }}">
-                            @csrf
-                            <input type="hidden" name="question_id" value="{{ $question->id }}">
+                    <!-- Options Form -->
+                    <form method="POST" action="{{ route('tryout.answer') }}" class="mt-4"
+                        data-question-id="{{ $question->id }}">
+                        @csrf
+                        <input type="hidden" name="question_id" value="{{ $question->id }}">
 
-                            <div class="grid gap-3 mt-4">
-                                @foreach (['A', 'B', 'C', 'D', 'E'] as $opt)
+                        <div class="grid gap-3 mt-4">
+                            @foreach (['A', 'B', 'C', 'D', 'E'] as $opt)
+                            @php
+                            $optionText = $question['option_' . strtolower($opt)];
+                            $imageField = 'option_' . strtolower($opt) . '_image';
+
+                            $isSelected =
+                            isset($answers[$question->id]) &&
+                            $answers[$question->id]->answer === $opt;
+                            @endphp
+
+                            {{-- batas --}}
+                            @if ($optionText || $question->$imageField)
+                            <label
+                                class="bg-white hover:bg-blue-50 border border-gray-200 rounded-xl p-3 cursor-pointer transition-all flex items-center shadow-sm group">
+                                <input type="radio" name="answer" value="{{ $opt }}" class="mr-3 w-4 h-4 text-blue-600"
+                                    {{ $isSelected ? 'checked' : '' }} onchange="submitAnswer(this)">
+                                <span class="font-bold mr-3 text-blue-600 group-hover:scale-110 transition-transform">
+                                    {{ $opt }}.
+                                </span>
+                                <div class="flex flex-col">
+                                    <span class="text-gray-700">{{ $optionText }}</span>
+
                                     @php
-                                        $optionText = $question['option_' . strtolower($opt)];
-                                        $isSelected =
-                                            isset($answers[$question->id]) && $answers[$question->id]->answer === $opt;
+                                    $imageField = 'option_' . strtolower($opt) . '_image';
                                     @endphp
-                                    @if ($optionText || $question->$imageField)
-                                        <label
-                                            class="bg-white hover:bg-blue-50 border border-gray-200 rounded-xl p-3 cursor-pointer transition-all flex items-center shadow-sm group">
-                                            <input type="radio" name="answer" value="{{ $opt }}"
-                                                class="mr-3 w-4 h-4 text-blue-600" {{ $isSelected ? 'checked' : '' }}
-                                                onchange="submitAnswer(this)">
-                                            <span
-                                                class="font-bold mr-3 text-blue-600 group-hover:scale-110 transition-transform">
-                                                {{ $opt }}.
-                                            </span>
-                                            <div class="flex flex-col">
-                                                <span class="text-gray-700">{{ $optionText }}</span>
 
-                                                @php
-                                                    $imageField = 'option_' . strtolower($opt) . '_image';
-                                                @endphp
-
-                                                @if ($question->$imageField)
-                                                    <img src="{{ asset('storage/' . $question->$imageField) }}"
-                                                        class="mt-2 rounded-lg max-h-40 object-contain">
-                                                @endif
-                                            </div>
-                                        </label>
+                                    @if ($question->$imageField)
+                                    <img src="{{ asset($question->$imageField) }}"
+                                        class="mt-2 rounded-lg max-h-40 object-contain">
                                     @endif
-                                @endforeach
-                            </div>
-                        </form>
-                    </div>
+                                </div>
+                            </label>
+                            @endif
+                            @endforeach
+                        </div>
+                    </form>
+                </div>
                 @endforeach
             </div>
 
@@ -176,7 +178,6 @@
     </form>
 
     <script>
-    
         let questions = @json($questions->pluck('id'));
         let currentIndex = 0;
         const totalQuestions = {{ $totalQuestions }};

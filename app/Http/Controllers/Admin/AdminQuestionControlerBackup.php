@@ -70,40 +70,29 @@ class AdminQuestionController extends Controller
         $data = $request->all();
 
         // 🔽 HANDLE GAMBAR SOAL
-       if ($request->hasFile("question_image")) {
-
-    $file = $request->file("question_image");
-
-    $filename = time() . '_' . $file->getClientOriginalName();
-
-    $file->move(public_path('uploads/questions'), $filename);
-
-    $data["question_image"] = 'uploads/questions/' . $filename;
-}
+        if ($request->hasFile("question_image")) {
+            $data["question_image"] = $request
+                ->file("question_image")
+                ->store("questions", "public");
+        }
 
         // 🔽 HANDLE GAMBAR OPSI
         foreach (["a", "b", "c", "d", "e"] as $opt) {
+            $field = "option_{$opt}_image";
 
-    $field = "option_{$opt}_image";
-
-    if ($request->hasFile($field)) {
-
-        $file = $request->file($field);
-
-        $filename = time() . '_' . $opt . '_' . $file->getClientOriginalName();
-
-        $file->move(public_path('uploads/options'), $filename);
-
-        $data[$field] = 'uploads/options/' . $filename;
-    }
-}
+            if ($request->hasFile($field)) {
+                $data[$field] = $request
+                    ->file($field)
+                    ->store("options", "public");
+            }
+        }
 
         $question = Question::create($data);
         if ($question->category->slug === "tkp") {
             $options = ["A", "B", "C", "D", "E"];
 
             foreach ($options as $opt) {
-                $pointKey = "points_" . strtolower($opt); 
+                $pointKey = "points_" . strtolower($opt); // jadi points_a, points_b, dst
 
                 \App\Models\TkpScore::create([
                     "question_id" => $question->id,
