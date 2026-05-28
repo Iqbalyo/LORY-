@@ -8,7 +8,8 @@
 
             
             <div class="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden p-8">
-                <form method="POST" id="updateForm" action="{{ route('questions.update', $question->id) }}">
+                <form method="POST" id="updateForm" action="{{ route('questions.update', $question->id) }}" enctype="multipart/form-data">
+                    {{-- biasakan ingat enctype="multipart/form-data" buat upload gambar/data karena jika tidak gak bakalan terkirim ke server,intinya digunakan buat ngimir form ke server--}}
                     @csrf
                     @method('PUT')
 

@@ -49,6 +49,7 @@
             <p class="mt-1 text-xs text-gray-400">*Format: jpg, png, webp. Maks 2MB.</p>
         </div>
     </div>
+    
 
     <div class="grid grid-cols-1 gap-4">
         <label class="text-sm font-bold text-gray-700 ml-1">Opsi Jawaban & Poin (Khusus TKP isi poin 1-5)</label>
