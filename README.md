@@ -2,7 +2,7 @@
 
 LORY adalah aplikasi berbasis web untuk simulasi ujian CPNS yang fokus pada kemudahan akses melalui perangkat mobile.
 
-## Fitur Utama
+## Fitur Utama oke
 - Simulasi ujian dengan waktu real-time.
 - Dashboard hasil ujian.
 - Manajemen soal (Admin Panel).
